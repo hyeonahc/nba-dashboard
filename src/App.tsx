@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Footer from "./components/Footer"
 import Navigation from "./components/Navigation"
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }
