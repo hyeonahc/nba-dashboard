@@ -1,5 +1,5 @@
 import axios from "axios"
-import type { NewsApiArticle, NewsArticle } from "../types"
+import type { NewsApiArticle } from "../types"
 
 // Create axios instance for news API
 const newsApi = axios.create({
@@ -47,8 +47,7 @@ export const newsApiService = {
           url: article.url,
         })) || []
 
-      // Ensure we always return exactly 5 articles
-      return ensureFiveArticles(articles)
+      return articles
     } catch (error) {
       console.error("Error fetching news:", error)
       // Return fallback data in case of API error
@@ -97,19 +96,6 @@ export const newsApiService = {
       return fallbackArticles
     }
   },
-}
-
-// Helper function to ensure exactly 5 articles
-const ensureFiveArticles = (articles: NewsArticle[]) => {
-  const TARGET_COUNT = 5
-
-  if (articles.length >= TARGET_COUNT) {
-    return articles.slice(0, TARGET_COUNT)
-  }
-
-  // If we have fewer than 5 articles, return what we have
-  // The fallback data already has 5 articles, so this should rarely happen
-  return articles
 }
 
 export default newsApi

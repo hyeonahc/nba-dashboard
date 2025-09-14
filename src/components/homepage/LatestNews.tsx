@@ -9,6 +9,9 @@ interface LatestNewsProps {
 }
 
 const LatestNews = ({ articles }: LatestNewsProps) => {
+  // Ensure we always display exactly 5 articles
+  const displayArticles = articles.slice(0, 5)
+
   return (
     <Card>
       <SectionHeader
@@ -16,7 +19,7 @@ const LatestNews = ({ articles }: LatestNewsProps) => {
         title="Latest News"
       />
       <div className="space-y-4">
-        {articles.map(article => (
+        {displayArticles.map(article => (
           <MediaItem
             key={article.id}
             {...article}
