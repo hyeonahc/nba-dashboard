@@ -1,15 +1,8 @@
 import { Newspaper } from "lucide-react"
+import type { NewsArticle } from "../../types"
 import Card from "../ui/Card"
 import MediaItem from "../ui/MediaItem"
 import SectionHeader from "../ui/SectionHeader"
-
-interface NewsArticle {
-  id: number
-  title: string
-  summary: string
-  time: string
-  category: string
-}
 
 interface LatestNewsProps {
   articles: NewsArticle[]
@@ -26,10 +19,7 @@ const LatestNews = ({ articles }: LatestNewsProps) => {
         {articles.map(article => (
           <MediaItem
             key={article.id}
-            title={article.title}
-            subtitle={article.summary}
-            category={article.category}
-            time={article.time}
+            {...article}
             className="border-b border-gray-200 pb-4 last:border-b-0"
           />
         ))}

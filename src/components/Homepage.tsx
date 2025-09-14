@@ -1,3 +1,4 @@
+import { useLatestNews } from "../hooks/news/useLatestNews"
 import LatestNews from "./homepage/LatestNews"
 import LiveMatch from "./homepage/LiveMatch"
 import PastMatches from "./homepage/PastMatches"
@@ -6,7 +7,8 @@ import TrendingVideos from "./homepage/TrendingVideos"
 import UpcomingMatches from "./homepage/UpcomingMatches"
 
 const Homepage = () => {
-  // Mock data - in a real app, this would come from an API
+  const { data: news = [], isLoading: newsLoading } = useLatestNews()
+
   const upcomingMatches = [
     {
       id: 1,
@@ -103,30 +105,19 @@ const Homepage = () => {
     },
   ]
 
-  const news = [
-    {
-      id: 1,
-      title: "Lakers Sign New Point Guard",
-      summary: "The Lakers have officially signed veteran point guard...",
-      time: "2 hours ago",
-      category: "Transactions",
-    },
-    {
-      id: 2,
-      title: "Injury Report: Key Players Out",
-      summary:
-        "Several star players are listed as questionable for tonight's games...",
-      time: "4 hours ago",
-      category: "Injuries",
-    },
-    {
-      id: 3,
-      title: "Trade Deadline Approaching",
-      summary: "Teams are making final moves before the trade deadline...",
-      time: "6 hours ago",
-      category: "Trades",
-    },
-  ]
+  // Show loading state only for news
+  if (newsLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading news...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
