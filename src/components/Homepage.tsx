@@ -1,5 +1,7 @@
 // TODO: Before deployment, replace with useLatestNews (remove localStorage caching)
 import { useLatestNewsWithCache } from "../hooks/news/useLatestNewsWithCache"
+// TODO: Before deployment, replace with useTrendingVideos (remove localStorage caching)
+import { useTrendingVideosWithCache } from "../hooks/video/useTrendingVideosWithCache"
 import LatestNews from "./homepage/LatestNews"
 import LiveMatch from "./homepage/LiveMatch"
 import PastMatches from "./homepage/PastMatches"
@@ -10,6 +12,12 @@ import UpcomingMatches from "./homepage/UpcomingMatches"
 const Homepage = () => {
   // TODO: Change to useLatestNews() before deployment
   const { data: news = [], isLoading: newsLoading } = useLatestNewsWithCache()
+  // TODO: Change to useTrendingVideos() before deployment
+  const {
+    data: trendingVideos = [],
+    isLoading: videosLoading,
+    error: videosError,
+  } = useTrendingVideosWithCache()
 
   const upcomingMatches = [
     {
@@ -83,38 +91,14 @@ const Homepage = () => {
     },
   ]
 
-  const trendingVideos = [
-    {
-      id: 1,
-      title: "LeBron James 40-Point Performance",
-      duration: "3:24",
-      views: "2.1M",
-      thumbnail: "🏀",
-    },
-    {
-      id: 2,
-      title: "Steph Curry Game-Winning Shot",
-      duration: "2:15",
-      views: "1.8M",
-      thumbnail: "🏀",
-    },
-    {
-      id: 3,
-      title: "Giannis Antetokounmpo Dunk Compilation",
-      duration: "4:12",
-      views: "1.5M",
-      thumbnail: "🏀",
-    },
-  ]
-
-  // Show loading state only for news
-  if (newsLoading) {
+  // Show loading state for news or videos
+  if (newsLoading || videosLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading news...</p>
+            <p className="text-gray-600">Loading content...</p>
           </div>
         </div>
       </div>
@@ -138,7 +122,11 @@ const Homepage = () => {
 
         {/* Right Column */}
         <div className="lg:col-span-3 space-y-6">
-          <TrendingVideos videos={trendingVideos} />
+          <TrendingVideos
+            videos={trendingVideos}
+            isLoading={videosLoading}
+            error={videosError}
+          />
           <LatestNews articles={news} />
         </div>
       </div>
