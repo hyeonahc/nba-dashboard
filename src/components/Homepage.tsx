@@ -1,4 +1,4 @@
-import { useLatestNews } from "../hooks/news/useLatestNews"
+import { useLatestNewsWithCache } from "../hooks/news/useLatestNewsWithCache"
 import LatestNews from "./homepage/LatestNews"
 import LiveMatch from "./homepage/LiveMatch"
 import PastMatches from "./homepage/PastMatches"
@@ -7,7 +7,7 @@ import TrendingVideos from "./homepage/TrendingVideos"
 import UpcomingMatches from "./homepage/UpcomingMatches"
 
 const Homepage = () => {
-  const { data: news = [], isLoading: newsLoading } = useLatestNews()
+  const { data: news = [], isLoading: newsLoading } = useLatestNewsWithCache()
 
   const upcomingMatches = [
     {

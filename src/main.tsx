@@ -9,12 +9,13 @@ import "./index.css"
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 30, // 30 minutes - data stays fresh longer
-      gcTime: 1000 * 60 * 60, // 1 hour - cache persists longer
+      staleTime: 1000 * 60 * 60 * 24, // 24 hours - data stays fresh much longer
+      gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days - cache persists much longer
       retry: 0, // No retries to avoid hitting API limits
       refetchOnWindowFocus: false, // Don't refetch when window gains focus
       refetchOnMount: false, // Don't refetch when component mounts if data exists
       refetchOnReconnect: false, // Don't refetch when reconnecting
+      refetchInterval: false, // Never refetch automatically
     },
   },
 })
