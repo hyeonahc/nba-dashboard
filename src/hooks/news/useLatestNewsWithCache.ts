@@ -3,8 +3,9 @@ import { newsApiService } from "../../api/newsApi"
 
 const CACHE_KEY = "nba-dashboard-news-cache"
 const CACHE_EXPIRY_KEY = "nba-dashboard-news-cache-expiry"
-// TODO: Before deployment, reduce cache duration for production
-// Current: 24 hours (development) - should be much shorter for production
+// TODO: Before deployment, replace this entire hook with useLatestNews.ts
+// This hook uses localStorage caching which is only needed for development
+
 // Consider: 5-15 minutes for production to show fresh articles on user refresh
 const CACHE_DURATION = 1000 * 60 * 60 * 24 // 24 hours
 
@@ -26,7 +27,18 @@ const getCachedNews = (): any[] | null => {
       return null
     }
 
-    return JSON.parse(cached)
+    const parsedCache = JSON.parse(cached)
+
+    // Check if cached data has imageUrl (new format)
+    // If not, it's old cached data without images, so invalidate cache
+    if (parsedCache.length > 0 && !parsedCache[0].hasOwnProperty("imageUrl")) {
+      console.log("🗑️ Old cached data detected (no imageUrl), clearing cache")
+      localStorage.removeItem(CACHE_KEY)
+      localStorage.removeItem(CACHE_EXPIRY_KEY)
+      return null
+    }
+
+    return parsedCache
   } catch (error) {
     console.error("Error reading cached news:", error)
     return null
@@ -81,4 +93,14 @@ export const clearNewsCache = () => {
   localStorage.removeItem(CACHE_KEY)
   localStorage.removeItem(CACHE_EXPIRY_KEY)
   console.log("🗑️ News cache cleared")
+}
+
+// One-time cache clear to force fresh data with images
+if (
+  typeof window !== "undefined" &&
+  !localStorage.getItem("cache-cleared-v3")
+) {
+  clearNewsCache()
+  localStorage.setItem("cache-cleared-v3", "true")
+  console.log("🔄 Cache cleared to force fresh data with Pexels images")
 }

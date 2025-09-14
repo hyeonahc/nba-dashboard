@@ -1,3 +1,4 @@
+// TODO: Before deployment, replace with useLatestNews (remove localStorage caching)
 import { useLatestNewsWithCache } from "../hooks/news/useLatestNewsWithCache"
 import LatestNews from "./homepage/LatestNews"
 import LiveMatch from "./homepage/LiveMatch"
@@ -7,6 +8,7 @@ import TrendingVideos from "./homepage/TrendingVideos"
 import UpcomingMatches from "./homepage/UpcomingMatches"
 
 const Homepage = () => {
+  // TODO: Change to useLatestNews() before deployment
   const { data: news = [], isLoading: newsLoading } = useLatestNewsWithCache()
 
   const upcomingMatches = [

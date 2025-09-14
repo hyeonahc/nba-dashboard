@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { newsApiService } from "../../api/newsApi"
 
+// TODO: This is the production-ready hook (no localStorage caching)
+// Replace useLatestNewsWithCache with this before deployment
+
 export const useLatestNews = () => {
   return useQuery({
     queryKey: ["latestNews"],

@@ -1,5 +1,6 @@
 import axios from "axios"
-import type { NewsApiArticle } from "../types"
+import type { NewsApiArticle, NewsArticle } from "../types"
+import { getRandomBasketballImageFromPexels } from "../utils/pexelsImageUtils"
 
 // Create axios instance for news API
 const newsApi = axios.create({
@@ -45,9 +46,26 @@ export const newsApiService = {
           time: "Recently",
           source: article.source.toUpperCase(),
           url: article.url,
+          imageUrl: "", // Will be populated with Pexels image
         })) || []
 
-      return articles
+      // Generate Pexels images for each article
+      const articlesWithImages = await Promise.all(
+        articles.map(async (article: NewsArticle, index: number) => {
+          try {
+            const imageUrl = await getRandomBasketballImageFromPexels(400, 300)
+            return { ...article, imageUrl }
+          } catch (error) {
+            console.error(
+              `Failed to fetch image for article ${index + 1}:`,
+              error
+            )
+            return article // Return article without image if Pexels fails
+          }
+        })
+      )
+
+      return articlesWithImages
     } catch (error) {
       console.error("Error fetching news:", error)
       // Return fallback data in case of API error
@@ -59,6 +77,7 @@ export const newsApiService = {
           time: "Recently",
           source: "Miami Heat",
           url: "https://www.si.com/nba/heat/news/miami-heat-guard-earns-brutal-mention-among-nba-s-all-overpaid-team-01k52bh1983z",
+          imageUrl: "",
         },
         {
           id: 2,
@@ -67,6 +86,7 @@ export const newsApiService = {
           time: "Recently",
           source: "CBS Sports",
           url: "https://www.cbssports.com/nba/news/richard-jefferson-denounces-cowardly-nba-rule-change-as-failed-last-second-heaves-become-team-shot-attempts/",
+          imageUrl: "",
         },
         {
           id: 3,
@@ -75,6 +95,7 @@ export const newsApiService = {
           time: "Recently",
           source: "Basket News",
           url: "https://basketnews.com/news-231423-nba-center-gets-his-jersey-ripped-during-an-intense-eurobasket-final.html",
+          imageUrl: "",
         },
         {
           id: 4,
@@ -82,18 +103,36 @@ export const newsApiService = {
           time: "Recently",
           source: "ESPN",
           url: "https://www.espn.com/nba/story/_/id/example-lakers-sign-point-guard",
+          imageUrl: "",
         },
         {
           id: 5,
           title:
-            "Kawhi Leonard Scandal: How Clippers’ Ownership Ties Could Spark League-Wide Collective Bargaining Reform",
+            "Kawhi Leonard Scandal: How Clippers' Ownership Ties Could Spark League-Wide Collective Bargaining Reform",
           time: "Recently",
           source: "The Playoffs",
           url: "https://theplayoffs.news/en/kawhi-leonard-scandal-how-clippers-ownership-ties-could-spark-league-wide-collective-bargaining-reform/",
+          imageUrl: "",
         },
       ]
 
-      return fallbackArticles
+      // Generate Pexels images for fallback articles too
+      const fallbackArticlesWithImages = await Promise.all(
+        fallbackArticles.map(async (article: NewsArticle, index: number) => {
+          try {
+            const imageUrl = await getRandomBasketballImageFromPexels(400, 300)
+            return { ...article, imageUrl }
+          } catch (error) {
+            console.error(
+              `Failed to fetch fallback image for article ${index + 1}:`,
+              error
+            )
+            return article // Return article without image if Pexels fails
+          }
+        })
+      )
+
+      return fallbackArticlesWithImages
     }
   },
 }
