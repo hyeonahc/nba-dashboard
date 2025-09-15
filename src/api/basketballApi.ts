@@ -3,6 +3,7 @@ import {
   getOverallRankings,
   type StandingsApiResponse,
 } from "../utils/nbaRankingUtils"
+import { getCurrentNBASeason } from "../utils/seasonUtils"
 
 // Transformed data format for components (legacy compatibility)
 interface TransformedTeamRanking {
@@ -58,8 +59,8 @@ export const basketballApiService = {
   // Get team rankings
   getTeamRankings: async (): Promise<TransformedTeamRanking[]> => {
     try {
-      // TODO: Make season dynamic - add season parameter and dropdown selection
-      const season = "2023-2024" // Temporarily hardcoded
+      // Calculate current available season dynamically
+      const season = getCurrentNBASeason()
       const league = "12" // NBA league ID
 
       const response = await basketballApi.get<StandingsApiResponse>(

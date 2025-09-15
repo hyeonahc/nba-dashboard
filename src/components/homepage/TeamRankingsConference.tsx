@@ -1,5 +1,9 @@
 import { Trophy } from "lucide-react"
 import type { TransformedTeamRanking } from "../../types"
+import {
+  getCurrentNBASeason,
+  getSeasonDisplayName,
+} from "../../utils/seasonUtils"
 import Card from "../ui/Card"
 import SectionHeader from "../ui/SectionHeader"
 
@@ -30,23 +34,18 @@ const TeamRankingsConference = ({
   const conferenceName =
     conference === "Eastern Conference" ? "Eastern" : "Western"
 
+  const currentSeason = getCurrentNBASeason()
+  const seasonDisplayName = getSeasonDisplayName(currentSeason)
+
   return (
     <Card>
       <SectionHeader
         icon={<Trophy className="h-5 w-5 text-orange-500 mr-2" />}
         title={`${conferenceName} Conference Standings`}
+        rightSlot={
+          <div className="text-sm text-gray-500">{seasonDisplayName}</div>
+        }
       />
-
-      {/* TODO: Display season information in SectionHeader rightSlot */}
-      {/* TODO: Remove game info */}
-      {/* Subtle games played indicator */}
-      {!isLoading && !error && conferenceTeams.length > 0 && (
-        <div className="mb-3">
-          <p className="text-xs text-gray-500 text-right">
-            {conferenceTeams[0]?.gamesPlayed ?? 82} games
-          </p>
-        </div>
-      )}
 
       {/* Loading State */}
       {isLoading && (
