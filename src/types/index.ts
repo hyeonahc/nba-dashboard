@@ -42,6 +42,23 @@ export interface Team {
   division: string
 }
 
+// Team Ranking Types (from API)
+export interface TransformedTeamRanking {
+  position: number
+  team: string
+  wins: number
+  losses: number
+  winPercentage: number
+  logo?: string
+  conference: string
+  gamesPlayed: number
+  pointsFor: number
+  pointsAgainst: number
+  pointDifference: number
+  stage: string
+  description: string
+}
+
 // Video Types
 export interface Video {
   id: string
