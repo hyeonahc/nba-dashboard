@@ -1,9 +1,6 @@
-// TODO: Refactor to keep data fetching inside each component (LatestNews, TrendingVideos, UpcomingGames)
-// Homepage should only handle layout and shared data (standings)
+// Homepage handles layout and shared data (standings, games)
 import { useUpcomingGamesWithCache } from "../hooks/games/useUpcomingGamesWithCache"
-import { useLatestNewsWithCache } from "../hooks/news/useLatestNewsWithCache"
 import { useStandingsWithCache } from "../hooks/standings/useStandingsWithCache"
-import { useTrendingVideosWithCache } from "../hooks/video/useTrendingVideosWithCache"
 
 import GameSchedule from "./homepage/GameSchedule"
 import LatestNews from "./homepage/LatestNews"
@@ -13,13 +10,7 @@ import TrendingVideos from "./homepage/TrendingVideos"
 import UpcomingGames from "./homepage/UpcomingGames"
 
 const Homepage = () => {
-  // Fetch all data at the Homepage level to show loading one time
-  const { data: news = [], isLoading: newsLoading } = useLatestNewsWithCache()
-  const {
-    data: trendingVideos = [],
-    isLoading: videosLoading,
-    error: videosError,
-  } = useTrendingVideosWithCache()
+  // Fetch shared data at the Homepage level
   const {
     data: standings = [],
     isLoading: standingsLoading,
@@ -31,8 +22,8 @@ const Homepage = () => {
     error: gamesError,
   } = useUpcomingGamesWithCache()
 
-  // Show loading state until all data is ready
-  if (newsLoading || videosLoading || standingsLoading || gamesLoading) {
+  // Show loading state until shared data is ready
+  if (standingsLoading || gamesLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-center h-64">
@@ -83,12 +74,8 @@ const Homepage = () => {
 
         {/* Right Column */}
         <div className="lg:col-span-3 space-y-6">
-          <TrendingVideos
-            videos={trendingVideos}
-            isLoading={videosLoading}
-            error={videosError}
-          />
-          <LatestNews articles={news} />
+          <TrendingVideos />
+          <LatestNews />
         </div>
       </div>
     </div>
