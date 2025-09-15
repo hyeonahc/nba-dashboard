@@ -70,6 +70,50 @@ export interface Video {
   publishedAt: string
 }
 
+// BallDontLie API Types
+export interface BallDontLieTeam {
+  id: number
+  conference: string
+  division: string
+  city: string
+  name: string
+  full_name: string
+  abbreviation: string
+}
+
+export interface BallDontLieGame {
+  id: number
+  date: string
+  season: number
+  status: string
+  period: number
+  time: string | null
+  postseason: boolean
+  home_team_score: number
+  visitor_team_score: number
+  datetime: string
+  home_team: BallDontLieTeam
+  visitor_team: BallDontLieTeam
+}
+
+export interface BallDontLieGamesResponse {
+  data: BallDontLieGame[]
+}
+
+// Upcoming Game Types (transformed for UI)
+export interface UpcomingGameData {
+  id: string
+  homeTeam: string
+  awayTeam: string
+  homeTeamFullName: string
+  awayTeamFullName: string
+  homeTeamLogo?: string
+  awayTeamLogo?: string
+  date: string
+  time: string
+  season: string
+}
+
 // Common UI Props
 export interface BaseItemProps {
   id: string | number

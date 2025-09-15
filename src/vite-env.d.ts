@@ -3,6 +3,8 @@
 interface ImportMetaEnv {
   readonly VITE_BASKETBALL_API_URL: string
   readonly VITE_BASKETBALL_API_KEY: string
+  readonly VITE_BALLDONTLIE_API_URL: string
+  readonly VITE_BALLDONTLIE_API_KEY: string
   readonly VITE_NEWS_API_URL: string
   readonly VITE_NEWS_API_KEY: string
   readonly VITE_NEWS_API_HOST: string

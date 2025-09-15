@@ -1,34 +1,73 @@
-import { Calendar } from "lucide-react"
+import { AlertCircle, Calendar, Loader2 } from "lucide-react"
+import type { UpcomingGameData } from "../../types"
 import Card from "../ui/Card"
 import SectionHeader from "../ui/SectionHeader"
 
-interface UpcomingGameData {
-  id: string
-  homeTeam: string
-  awayTeam: string
-  homeTeamFullName: string
-  awayTeamFullName: string
-  homeTeamLogo?: string
-  awayTeamLogo?: string
-  date: string
-  time: string
-  season: string
-}
-
 interface UpcomingGamesProps {
   games: UpcomingGameData[]
+  loading: boolean
+  error: string | null
 }
 
-const UpcomingGames = ({ games }: UpcomingGamesProps) => {
+const UpcomingGames = ({ games, loading, error }: UpcomingGamesProps) => {
+  if (loading) {
+    return (
+      <Card>
+        <SectionHeader
+          icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
+          title="Upcoming Games"
+        />
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center space-y-3">
+            <Loader2 className="h-8 w-8 animate-spin text-orange-500" />
+            <p className="text-sm text-gray-600">Loading upcoming games...</p>
+          </div>
+        </div>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card>
+        <SectionHeader
+          icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
+          title="Upcoming Games"
+        />
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center space-y-3 text-center">
+            <AlertCircle className="h-8 w-8 text-red-500" />
+            <p className="text-sm text-gray-600">{error}</p>
+          </div>
+        </div>
+      </Card>
+    )
+  }
+
+  if (games.length === 0) {
+    return (
+      <Card>
+        <SectionHeader
+          icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
+          title="Upcoming Games"
+        />
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center space-y-3 text-center">
+            <Calendar className="h-8 w-8 text-gray-400" />
+            <p className="text-sm text-gray-600">No upcoming games scheduled</p>
+          </div>
+        </div>
+      </Card>
+    )
+  }
+
   return (
     <Card>
       <SectionHeader
         icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
         title="Upcoming Games"
         rightSlot={
-          <div className="text-sm text-gray-600">
-            {games[0]?.season || "2023-24 Season"}
-          </div>
+          <div className="text-sm text-gray-600">{games[0]?.season || ""}</div>
         }
       />
       {games.length > 0 && (

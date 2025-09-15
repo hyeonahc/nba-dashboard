@@ -1,5 +1,4 @@
-// TODO: Using cached hooks to reduce API calls during development.
-//       Replace with real-time hooks (no localStorage cache) before production deployment.
+import { useUpcomingGamesWithCache } from "../hooks/games/useUpcomingGamesWithCache"
 import { useLatestNewsWithCache } from "../hooks/news/useLatestNewsWithCache"
 import { useStandingsWithCache } from "../hooks/standings/useStandingsWithCache"
 import { useTrendingVideosWithCache } from "../hooks/video/useTrendingVideosWithCache"
@@ -12,8 +11,7 @@ import UpcomingGames from "./homepage/UpcomingGames"
 import UpcomingMatches from "./homepage/UpcomingMatches"
 
 const Homepage = () => {
-  // TODO: Using cached hooks to reduce API calls during development.
-  //       Replace with real-time hooks (no localStorage cache) before production deployment.
+  // Fetch all data at the Homepage level to show loading one time
   const { data: news = [], isLoading: newsLoading } = useLatestNewsWithCache()
   const {
     data: trendingVideos = [],
@@ -25,6 +23,11 @@ const Homepage = () => {
     isLoading: standingsLoading,
     error: standingsError,
   } = useStandingsWithCache()
+  const {
+    games: upcomingGames = [],
+    loading: gamesLoading,
+    error: gamesError,
+  } = useUpcomingGamesWithCache()
 
   const upcomingMatches = [
     {
@@ -44,37 +47,6 @@ const Homepage = () => {
       date: "Tomorrow",
       homeScore: null,
       awayScore: null,
-    },
-  ]
-
-  const upcomingGames = [
-    {
-      id: "1",
-      homeTeam: "Lakers",
-      awayTeam: "Warriors",
-      homeTeamFullName: "Los Angeles Lakers",
-      awayTeamFullName: "Golden State Warriors",
-      homeTeamLogo:
-        "https://cdn.nba.com/logos/nba/1610612747/primary/L/logo.svg",
-      awayTeamLogo:
-        "https://cdn.nba.com/logos/nba/1610612744/primary/L/logo.svg",
-      date: "Today",
-      time: "8:00 PM",
-      season: "2023-24 Season",
-    },
-    {
-      id: "2",
-      homeTeam: "Celtics",
-      awayTeam: "Heat",
-      homeTeamFullName: "Boston Celtics",
-      awayTeamFullName: "Miami Heat",
-      homeTeamLogo:
-        "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg",
-      awayTeamLogo:
-        "https://cdn.nba.com/logos/nba/1610612748/primary/L/logo.svg",
-      date: "Tomorrow",
-      time: "7:30 PM",
-      season: "2023-24 Season",
     },
   ]
 
@@ -105,8 +77,8 @@ const Homepage = () => {
     },
   ]
 
-  // Show loading state for news, videos, or standings
-  if (newsLoading || videosLoading || standingsLoading) {
+  // Show loading state until all data is ready
+  if (newsLoading || videosLoading || standingsLoading || gamesLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-center h-64">
@@ -130,7 +102,11 @@ const Homepage = () => {
 
         {/* Middle Column */}
         <div className="lg:col-span-6 space-y-6">
-          <UpcomingGames games={upcomingGames} />
+          <UpcomingGames
+            games={upcomingGames}
+            loading={gamesLoading}
+            error={gamesError}
+          />
           <TeamRankingsConference
             teams={standings}
             conference="Eastern Conference"
