@@ -37,7 +37,8 @@ const TeamRankingsConference = ({
         title={`${conferenceName} Conference Standings`}
       />
 
-      {/* TODO: Place game info in SectionHeader rightSlot */}
+      {/* TODO: Display season information in SectionHeader rightSlot */}
+      {/* TODO: Remove game info */}
       {/* Subtle games played indicator */}
       {!isLoading && !error && conferenceTeams.length > 0 && (
         <div className="mb-3">

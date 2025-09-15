@@ -1,3 +1,5 @@
+// TODO: Refactor to keep data fetching inside each component (LatestNews, TrendingVideos, UpcomingGames)
+// Homepage should only handle layout and shared data (standings)
 import { useUpcomingGamesWithCache } from "../hooks/games/useUpcomingGamesWithCache"
 import { useLatestNewsWithCache } from "../hooks/news/useLatestNewsWithCache"
 import { useStandingsWithCache } from "../hooks/standings/useStandingsWithCache"
@@ -50,33 +52,6 @@ const Homepage = () => {
     },
   ]
 
-  const pastMatches = [
-    {
-      id: 1,
-      homeTeam: "Celtics",
-      awayTeam: "Heat",
-      homeScore: 112,
-      awayScore: 108,
-      date: "Yesterday",
-    },
-    {
-      id: 2,
-      homeTeam: "Nuggets",
-      awayTeam: "Lakers",
-      homeScore: 120,
-      awayScore: 115,
-      date: "2 days ago",
-    },
-    {
-      id: 3,
-      homeTeam: "Thunder",
-      awayTeam: "Warriors",
-      homeScore: 128,
-      awayScore: 120,
-      date: "3 days ago",
-    },
-  ]
-
   // Show loading state until all data is ready
   if (newsLoading || videosLoading || standingsLoading || gamesLoading) {
     return (
@@ -96,8 +71,8 @@ const Homepage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column */}
         <div className="lg:col-span-3 space-y-6">
+          <PastMatches />
           <UpcomingMatches matches={upcomingMatches} />
-          <PastMatches matches={pastMatches} />
         </div>
 
         {/* Middle Column */}

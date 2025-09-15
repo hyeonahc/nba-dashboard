@@ -3,6 +3,8 @@ import { type ReactNode } from "react"
 interface MatchItemProps {
   homeTeam: string
   awayTeam: string
+  homeTeamLogo?: string
+  awayTeamLogo?: string
   homeScore?: number | null
   awayScore?: number | null
   date?: string
@@ -17,6 +19,8 @@ interface MatchItemProps {
 const MatchItem = ({
   homeTeam,
   awayTeam,
+  homeTeamLogo,
+  awayTeamLogo,
   homeScore,
   awayScore,
   date,
@@ -63,8 +67,19 @@ const MatchItem = ({
 
       {/* Teams and scores */}
       <div className="flex justify-between items-center">
-        <div className="text-center flex-1">
-          <div className="font-medium text-gray-900">{homeTeam}</div>
+        <div className="text-center flex-1 min-w-0">
+          {homeTeamLogo && (
+            <div className="flex justify-center mb-2">
+              <img
+                src={homeTeamLogo}
+                alt={`${homeTeam} logo`}
+                className="w-8 h-8 object-contain"
+              />
+            </div>
+          )}
+          <div className="text-sm font-medium text-gray-900 truncate px-1">
+            {homeTeam}
+          </div>
           {hasScores && (
             <div
               className={`text-2xl font-bold text-orange-600 ${
@@ -76,10 +91,23 @@ const MatchItem = ({
           )}
         </div>
 
-        <div className="text-gray-400 text-xl mx-4">{isLive ? "-" : "vs"}</div>
+        <div className="text-gray-400 text-xl mx-4 flex-shrink-0">
+          {isLive ? "-" : "vs"}
+        </div>
 
-        <div className="text-center flex-1">
-          <div className="font-medium text-gray-900">{awayTeam}</div>
+        <div className="text-center flex-1 min-w-0">
+          {awayTeamLogo && (
+            <div className="flex justify-center mb-2">
+              <img
+                src={awayTeamLogo}
+                alt={`${awayTeam} logo`}
+                className="w-8 h-8 object-contain"
+              />
+            </div>
+          )}
+          <div className="text-sm font-medium text-gray-900 truncate px-1">
+            {awayTeam}
+          </div>
           {hasScores && (
             <div
               className={`text-2xl font-bold text-orange-600 ${

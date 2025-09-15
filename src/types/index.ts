@@ -114,6 +114,22 @@ export interface UpcomingGameData {
   season: string
 }
 
+// Completed Game Types (transformed for UI)
+export interface CompletedGameData {
+  id: string
+  homeTeam: string
+  awayTeam: string
+  homeTeamFullName: string
+  awayTeamFullName: string
+  homeTeamLogo?: string
+  awayTeamLogo?: string
+  homeScore: number
+  awayScore: number
+  date: string
+  season: string
+  status: string
+}
+
 // Common UI Props
 export interface BaseItemProps {
   id: string | number
