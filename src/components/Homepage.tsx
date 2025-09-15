@@ -1,23 +1,30 @@
-// TODO: Before deployment, replace with useLatestNews (remove localStorage caching)
+// TODO: Using cached hooks to reduce API calls during development.
+//       Replace with real-time hooks (no localStorage cache) before production deployment.
 import { useLatestNewsWithCache } from "../hooks/news/useLatestNewsWithCache"
-// TODO: Before deployment, replace with useTrendingVideos (remove localStorage caching)
+import { useStandingsWithCache } from "../hooks/standings/useStandingsWithCache"
 import { useTrendingVideosWithCache } from "../hooks/video/useTrendingVideosWithCache"
+
 import LatestNews from "./homepage/LatestNews"
 import LiveMatch from "./homepage/LiveMatch"
 import PastMatches from "./homepage/PastMatches"
-import TeamRankings from "./homepage/TeamRankings"
+import TeamRankingsConference from "./homepage/TeamRankingsConference"
 import TrendingVideos from "./homepage/TrendingVideos"
 import UpcomingMatches from "./homepage/UpcomingMatches"
 
 const Homepage = () => {
-  // TODO: Change to useLatestNews() before deployment
+  // TODO: Using cached hooks to reduce API calls during development.
+  //       Replace with real-time hooks (no localStorage cache) before production deployment.
   const { data: news = [], isLoading: newsLoading } = useLatestNewsWithCache()
-  // TODO: Change to useTrendingVideos() before deployment
   const {
     data: trendingVideos = [],
     isLoading: videosLoading,
     error: videosError,
   } = useTrendingVideosWithCache()
+  const {
+    data: standings = [],
+    isLoading: standingsLoading,
+    error: standingsError,
+  } = useStandingsWithCache()
 
   const upcomingMatches = [
     {
@@ -38,20 +45,6 @@ const Homepage = () => {
       homeScore: null,
       awayScore: null,
     },
-  ]
-
-  const rankings = [
-    { position: 1, team: "Celtics", wins: 25, losses: 6, winPercentage: 0.806 },
-    {
-      position: 2,
-      team: "Timberwolves",
-      wins: 24,
-      losses: 7,
-      winPercentage: 0.774,
-    },
-    { position: 3, team: "Thunder", wins: 23, losses: 8, winPercentage: 0.742 },
-    { position: 4, team: "Nuggets", wins: 22, losses: 9, winPercentage: 0.71 },
-    { position: 5, team: "Bucks", wins: 21, losses: 10, winPercentage: 0.677 },
   ]
 
   const liveMatch = {
@@ -91,8 +84,8 @@ const Homepage = () => {
     },
   ]
 
-  // Show loading state for news or videos
-  if (newsLoading || videosLoading) {
+  // Show loading state for news, videos, or standings
+  if (newsLoading || videosLoading || standingsLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-center h-64">
@@ -111,13 +104,26 @@ const Homepage = () => {
         {/* Left Column */}
         <div className="lg:col-span-3 space-y-6">
           <UpcomingMatches matches={upcomingMatches} />
-          <TeamRankings teams={rankings} />
+          <PastMatches matches={pastMatches} />
         </div>
 
         {/* Middle Column */}
         <div className="lg:col-span-6 space-y-6">
           <LiveMatch match={liveMatch} />
-          <PastMatches matches={pastMatches} />
+          <TeamRankingsConference
+            teams={standings}
+            conference="Eastern Conference"
+            isLoading={standingsLoading}
+            error={standingsError}
+            maxTeams={6}
+          />
+          <TeamRankingsConference
+            teams={standings}
+            conference="Western Conference"
+            isLoading={standingsLoading}
+            error={standingsError}
+            maxTeams={6}
+          />
         </div>
 
         {/* Right Column */}
