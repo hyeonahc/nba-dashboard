@@ -1,5 +1,9 @@
 import { Play } from "lucide-react"
 import { useTrendingVideosWithCache } from "../../../hooks/video/useTrendingVideosWithCache"
+import {
+  getEmptyStateMessage,
+  getUserFriendlyErrorMessage,
+} from "../../../utils/errorUtils"
 import Card from "../../ui/Card"
 import MediaCard from "../../ui/MediaCard"
 import SectionHeader from "../../ui/SectionHeader"
@@ -50,11 +54,10 @@ const TrendingVideos = () => {
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-red-800">
-                Failed to load videos
+                Unable to load videos
               </h3>
               <p className="text-sm text-red-700 mt-1">
-                {error.message ||
-                  "Unable to fetch YouTube videos. Please try again later."}
+                {getUserFriendlyErrorMessage(error, "videos")}
               </p>
             </div>
           </div>
@@ -99,8 +102,7 @@ const TrendingVideos = () => {
             No videos available
           </h3>
           <p className="text-xs text-gray-500 max-w-xs mx-auto">
-            We're working on bringing you the latest NBA videos. Check back
-            soon!
+            {getEmptyStateMessage("videos")}
           </p>
         </div>
       )}

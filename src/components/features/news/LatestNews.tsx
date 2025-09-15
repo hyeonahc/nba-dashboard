@@ -1,5 +1,9 @@
 import { Newspaper } from "lucide-react"
 import { useLatestNewsWithCache } from "../../../hooks/news/useLatestNewsWithCache"
+import {
+  getEmptyStateMessage,
+  getUserFriendlyErrorMessage,
+} from "../../../utils/errorUtils"
 import Card from "../../ui/Card"
 import MediaCard from "../../ui/MediaCard"
 import SectionHeader from "../../ui/SectionHeader"
@@ -52,11 +56,10 @@ const LatestNews = () => {
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-red-800">
-                Failed to load news
+                Unable to load news
               </h3>
               <p className="text-sm text-red-700 mt-1">
-                {error.message ||
-                  "Unable to fetch news articles. Please try again later."}
+                {getUserFriendlyErrorMessage(error, "news")}
               </p>
             </div>
           </div>
@@ -97,7 +100,7 @@ const LatestNews = () => {
             No news available
           </h3>
           <p className="text-xs text-gray-500 max-w-xs mx-auto">
-            We're working on bringing you the latest NBA news. Check back soon!
+            {getEmptyStateMessage("news")}
           </p>
         </div>
       )}

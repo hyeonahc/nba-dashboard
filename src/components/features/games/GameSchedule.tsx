@@ -1,5 +1,6 @@
 import { Clock } from "lucide-react"
 import type { UpcomingGameData } from "../../../types"
+import { getUserFriendlyErrorMessage } from "../../../utils/errorUtils"
 import Card from "../../ui/Card"
 import MatchItem from "../../ui/MatchItem"
 import SectionHeader from "../../ui/SectionHeader"
@@ -54,8 +55,10 @@ const GameSchedule = ({ games, loading, error }: UpcomingGamesProps) => {
           title="Schedule"
         />
         <div className="text-center py-8">
-          <p className="text-red-500 mb-2">Failed to load upcoming games</p>
-          <p className="text-sm text-gray-500">{error}</p>
+          <p className="text-red-500 mb-2">Unable to load upcoming games</p>
+          <p className="text-sm text-gray-500">
+            {getUserFriendlyErrorMessage({ message: error }, "games")}
+          </p>
         </div>
       </Card>
     )

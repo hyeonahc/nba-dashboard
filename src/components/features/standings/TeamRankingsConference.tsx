@@ -1,6 +1,10 @@
 import { Trophy } from "lucide-react"
 import type { TransformedTeamRanking } from "../../../types"
 import {
+  getEmptyStateMessage,
+  getUserFriendlyErrorMessage,
+} from "../../../utils/errorUtils"
+import {
   getCurrentNBASeason,
   getSeasonDisplayName,
 } from "../../../utils/seasonUtils"
@@ -76,11 +80,10 @@ const TeamRankingsConference = ({
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-red-800">
-                Failed to load standings
+                Unable to load standings
               </h3>
               <p className="text-sm text-red-700 mt-1">
-                {error.message ||
-                  "Unable to fetch team standings. Please try again later."}
+                {getUserFriendlyErrorMessage(error, "standings")}
               </p>
             </div>
           </div>
@@ -173,7 +176,7 @@ const TeamRankingsConference = ({
       {!isLoading && !error && conferenceTeams.length === 0 && (
         <div className="text-center py-8">
           <p className="text-sm text-gray-500">
-            No {conferenceName} Conference standings available
+            {getEmptyStateMessage("standings")}
           </p>
         </div>
       )}
