@@ -1,5 +1,5 @@
 import { Newspaper } from "lucide-react"
-import { useLatestNewsWithCache } from "../../../hooks/news/useLatestNewsWithCache"
+import { useLatestNews } from "../../../hooks/news/useLatestNews"
 import {
   getEmptyStateMessage,
   getUserFriendlyErrorMessage,
@@ -9,7 +9,7 @@ import MediaCard from "../../ui/MediaCard"
 import SectionHeader from "../../ui/SectionHeader"
 
 const LatestNews = () => {
-  const { data: articles = [], isLoading, error } = useLatestNewsWithCache()
+  const { data: articles = [], isLoading, error } = useLatestNews()
 
   // Display only 3 articles for better focus
   const displayArticles = articles.slice(0, 3)

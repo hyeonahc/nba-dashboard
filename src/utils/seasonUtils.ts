@@ -12,7 +12,7 @@
  * Get the current NBA season based on today's date
  * Returns the most recent season that should be available in the free API
  *
- * @returns {string} Season in format "YYYY-YY" (e.g., "2023-24")
+ * @returns {string} Season in format "YYYY-YYYY" (e.g., "2023-2024")
  */
 export const getCurrentNBASeason = (): string => {
   const now = new Date()
@@ -31,14 +31,14 @@ export const getCurrentNBASeason = (): string => {
     seasonStartYear = currentYear
   }
 
-  // Since free API only provides data from 2 years ago,
-  // we need to go back 2 years from the current season
-  const availableSeasonStartYear = seasonStartYear - 2
+  // Since free API only provides data from 1-2 years ago,
+  // we need to go back 1-2 years from the current season
+  // Try 1 year back first, then 2 years if needed
+  const availableSeasonStartYear = seasonStartYear - 1
   const availableSeasonEndYear = availableSeasonStartYear + 1
 
-  // Format as "YYYY-YY" (e.g., "2023-24")
-  const seasonEndYearShort = availableSeasonEndYear.toString().slice(-2)
-  return `${availableSeasonStartYear}-${seasonEndYearShort}`
+  // Format as "YYYY-YYYY" (e.g., "2023-2024")
+  return `${availableSeasonStartYear}-${availableSeasonEndYear}`
 }
 
 /**
@@ -55,15 +55,15 @@ export const getSeasonDisplayName = (season: string): string => {
  * Get available seasons for the free API
  * Returns an array of the last 3 seasons that should be available
  *
- * @returns {string[]} Array of seasons in format "YYYY-YY"
+ * @returns {string[]} Array of seasons in format "YYYY-YYYY"
  */
 export const getAvailableSeasons = (): string[] => {
   const currentSeason = getCurrentNBASeason()
   const currentYear = parseInt(currentSeason.split("-")[0])
 
   return [
-    `${currentYear - 2}-${(currentYear - 1).toString().slice(-2)}`,
-    `${currentYear - 1}-${currentYear.toString().slice(-2)}`,
-    currentSeason,
+    currentSeason, // Most recent (1 year back)
+    `${currentYear - 1}-${currentYear}`, // 2 years back
+    `${currentYear - 2}-${currentYear - 1}`, // 3 years back
   ]
 }

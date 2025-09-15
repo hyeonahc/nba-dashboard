@@ -1,16 +1,12 @@
 import { TrendingUp } from "lucide-react"
-import { useRecentGameResultsWithCache } from "../../../hooks/games/useRecentGameResultsWithCache"
+import { useRecentGameResults } from "../../../hooks/games/useRecentGameResults"
 import { getUserFriendlyErrorMessage } from "../../../utils/errorUtils"
 import Card from "../../ui/Card"
 import MatchItem from "../../ui/MatchItem"
 import SectionHeader from "../../ui/SectionHeader"
 
 const PastMatches = () => {
-  const {
-    data: games,
-    isLoading: loading,
-    error,
-  } = useRecentGameResultsWithCache()
+  const { games, loading, error } = useRecentGameResults()
 
   if (loading) {
     return (

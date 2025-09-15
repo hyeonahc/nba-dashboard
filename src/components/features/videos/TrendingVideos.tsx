@@ -1,5 +1,5 @@
 import { Play } from "lucide-react"
-import { useTrendingVideosWithCache } from "../../../hooks/video/useTrendingVideosWithCache"
+import { useTrendingVideos } from "../../../hooks/video/useTrendingVideos"
 import {
   getEmptyStateMessage,
   getUserFriendlyErrorMessage,
@@ -9,7 +9,7 @@ import MediaCard from "../../ui/MediaCard"
 import SectionHeader from "../../ui/SectionHeader"
 
 const TrendingVideos = () => {
-  const { data: videos = [], isLoading, error } = useTrendingVideosWithCache()
+  const { data: videos = [], isLoading, error } = useTrendingVideos()
   return (
     <Card>
       <SectionHeader

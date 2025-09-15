@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ballDontLieApiService } from "../../api/balldontlieApi"
+import { ballDontLieApiServiceWithCache } from "../../api/ballDontLieApiWithCache"
 import type { CompletedGameData } from "../../types"
 
 interface UseRecentGameResultsReturn {
@@ -18,7 +18,8 @@ export const useRecentGameResults = (): UseRecentGameResultsReturn => {
     try {
       setLoading(true)
       setError(null)
-      const recentResults = await ballDontLieApiService.getRecentGameResults()
+      const recentResults =
+        await ballDontLieApiServiceWithCache.getRecentGameResults()
       setGames(recentResults)
     } catch (err) {
       const errorMessage =

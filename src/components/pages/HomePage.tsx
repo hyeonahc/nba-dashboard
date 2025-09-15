@@ -1,6 +1,6 @@
 // Homepage handles layout and shared data (standings, games)
-import { useUpcomingGamesWithCache } from "../../hooks/games/useUpcomingGamesWithCache"
-import { useStandingsWithCache } from "../../hooks/standings/useStandingsWithCache"
+import { useUpcomingGames } from "../../hooks/games/useUpcomingGames"
+import { useStandings } from "../../hooks/standings/useStandings"
 
 import {
   GameSchedule,
@@ -17,12 +17,12 @@ const Homepage = () => {
     data: standings = [],
     isLoading: standingsLoading,
     error: standingsError,
-  } = useStandingsWithCache()
+  } = useStandings()
   const {
     games: upcomingGames = [],
     loading: gamesLoading,
     error: gamesError,
-  } = useUpcomingGamesWithCache()
+  } = useUpcomingGames()
 
   // Show loading state until shared data is ready
   if (standingsLoading || gamesLoading) {

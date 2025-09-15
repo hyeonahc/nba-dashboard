@@ -4,6 +4,7 @@ import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import App from "./App.tsx"
 import "./index.css"
+import "./utils/cacheUtils" // Initialize cache utilities
 
 // Create a client with extended cache times for free API limits
 const queryClient = new QueryClient({
