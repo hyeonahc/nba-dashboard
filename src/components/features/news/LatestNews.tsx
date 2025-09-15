@@ -1,8 +1,8 @@
 import { Newspaper } from "lucide-react"
-import { useLatestNewsWithCache } from "../../hooks/news/useLatestNewsWithCache"
-import Card from "../ui/Card"
-import MediaCard from "../ui/MediaCard"
-import SectionHeader from "../ui/SectionHeader"
+import { useLatestNewsWithCache } from "../../../hooks/news/useLatestNewsWithCache"
+import Card from "../../ui/Card"
+import MediaCard from "../../ui/MediaCard"
+import SectionHeader from "../../ui/SectionHeader"
 
 const LatestNews = () => {
   const { data: articles = [], isLoading, error } = useLatestNewsWithCache()

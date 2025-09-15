@@ -1,8 +1,8 @@
 import { Clock } from "lucide-react"
-import type { UpcomingGameData } from "../../types"
-import Card from "../ui/Card"
-import MatchItem from "../ui/MatchItem"
-import SectionHeader from "../ui/SectionHeader"
+import type { UpcomingGameData } from "../../../types"
+import Card from "../../ui/Card"
+import MatchItem from "../../ui/MatchItem"
+import SectionHeader from "../../ui/SectionHeader"
 
 interface UpcomingGamesProps {
   games: UpcomingGameData[]

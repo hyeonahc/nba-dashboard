@@ -1,8 +1,8 @@
 import { TrendingUp } from "lucide-react"
-import { useRecentGameResultsWithCache } from "../../hooks/games/useRecentGameResultsWithCache"
-import Card from "../ui/Card"
-import MatchItem from "../ui/MatchItem"
-import SectionHeader from "../ui/SectionHeader"
+import { useRecentGameResultsWithCache } from "../../../hooks/games/useRecentGameResultsWithCache"
+import Card from "../../ui/Card"
+import MatchItem from "../../ui/MatchItem"
+import SectionHeader from "../../ui/SectionHeader"
 
 const PastMatches = () => {
   const {

@@ -1,7 +1,7 @@
 import { AlertCircle, Calendar, Loader2 } from "lucide-react"
-import type { UpcomingGameData } from "../../types"
-import Card from "../ui/Card"
-import SectionHeader from "../ui/SectionHeader"
+import type { UpcomingGameData } from "../../../types"
+import Card from "../../ui/Card"
+import SectionHeader from "../../ui/SectionHeader"
 
 interface UpcomingGamesProps {
   games: UpcomingGameData[]

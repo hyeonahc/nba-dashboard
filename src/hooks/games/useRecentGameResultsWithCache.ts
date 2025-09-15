@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ballDontLieApiService } from "../../api/ballDontLieApi"
+import { ballDontLieApiService } from "../../api/balldontlieApi"
 import type { CompletedGameData } from "../../types"
 
 interface UseRecentGameResultsWithCacheReturn {

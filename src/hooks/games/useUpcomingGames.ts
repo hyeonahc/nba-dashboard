@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ballDontLieApiService } from "../../api/ballDontLieApi"
+import { ballDontLieApiService } from "../../api/balldontlieApi"
 import type { UpcomingGameData } from "../../types"
 
 interface UseUpcomingGamesReturn {

@@ -1,11 +1,11 @@
 import { Trophy } from "lucide-react"
-import type { TransformedTeamRanking } from "../../types"
+import type { TransformedTeamRanking } from "../../../types"
 import {
   getCurrentNBASeason,
   getSeasonDisplayName,
-} from "../../utils/seasonUtils"
-import Card from "../ui/Card"
-import SectionHeader from "../ui/SectionHeader"
+} from "../../../utils/seasonUtils"
+import Card from "../../ui/Card"
+import SectionHeader from "../../ui/SectionHeader"
 
 interface TeamRankingsConferenceProps {
   teams: TransformedTeamRanking[]

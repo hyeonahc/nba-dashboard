@@ -1,8 +1,8 @@
 import { Play } from "lucide-react"
-import { useTrendingVideosWithCache } from "../../hooks/video/useTrendingVideosWithCache"
-import Card from "../ui/Card"
-import MediaCard from "../ui/MediaCard"
-import SectionHeader from "../ui/SectionHeader"
+import { useTrendingVideosWithCache } from "../../../hooks/video/useTrendingVideosWithCache"
+import Card from "../../ui/Card"
+import MediaCard from "../../ui/MediaCard"
+import SectionHeader from "../../ui/SectionHeader"
 
 const TrendingVideos = () => {
   const { data: videos = [], isLoading, error } = useTrendingVideosWithCache()

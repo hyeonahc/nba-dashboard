@@ -1,7 +1,5 @@
 import { useState } from "react"
-import Footer from "./components/Footer"
-import Homepage from "./components/Homepage"
-import Navigation from "./components/Navigation"
+import { Footer, HomePage, Navigation } from "./components"
 
 function App() {
   const [currentPage, setCurrentPage] = useState("dashboard")
@@ -12,7 +10,7 @@ function App() {
 
       <main>
         {currentPage === "dashboard" ? (
-          <Homepage />
+          <HomePage />
         ) : (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="text-center">

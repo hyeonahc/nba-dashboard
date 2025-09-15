@@ -1,13 +1,15 @@
 // Homepage handles layout and shared data (standings, games)
-import { useUpcomingGamesWithCache } from "../hooks/games/useUpcomingGamesWithCache"
-import { useStandingsWithCache } from "../hooks/standings/useStandingsWithCache"
+import { useUpcomingGamesWithCache } from "../../hooks/games/useUpcomingGamesWithCache"
+import { useStandingsWithCache } from "../../hooks/standings/useStandingsWithCache"
 
-import GameSchedule from "./homepage/GameSchedule"
-import LatestNews from "./homepage/LatestNews"
-import PastMatches from "./homepage/PastMatches"
-import TeamRankingsConference from "./homepage/TeamRankingsConference"
-import TrendingVideos from "./homepage/TrendingVideos"
-import UpcomingGames from "./homepage/UpcomingGames"
+import {
+  GameSchedule,
+  LatestNews,
+  PastMatches,
+  TeamRankingsConference,
+  TrendingVideos,
+  UpcomingGames,
+} from "../features"
 
 const Homepage = () => {
   // Fetch shared data at the Homepage level
