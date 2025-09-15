@@ -1,14 +1,14 @@
 import { Newspaper } from "lucide-react"
 import { useLatestNewsWithCache } from "../../hooks/news/useLatestNewsWithCache"
 import Card from "../ui/Card"
-import MediaItem from "../ui/MediaItem"
+import MediaCard from "../ui/MediaCard"
 import SectionHeader from "../ui/SectionHeader"
 
 const LatestNews = () => {
   const { data: articles = [], isLoading, error } = useLatestNewsWithCache()
 
-  // Ensure we always display exactly 5 articles
-  const displayArticles = articles.slice(0, 5)
+  // Display only 3 articles for better focus
+  const displayArticles = articles.slice(0, 3)
 
   return (
     <Card>
@@ -21,8 +21,14 @@ const LatestNews = () => {
       {isLoading && (
         <div className="flex items-center justify-center h-32">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-2"></div>
-            <p className="text-sm text-gray-600">Loading news...</p>
+            <div className="relative">
+              <div className="animate-spin rounded-full h-10 w-10 border-2 border-orange-200 mx-auto mb-3"></div>
+              <div className="animate-spin rounded-full h-10 w-10 border-2 border-orange-500 border-t-transparent absolute top-0 left-1/2 transform -translate-x-1/2"></div>
+            </div>
+            <p className="text-sm text-gray-600 font-medium">
+              Loading latest news...
+            </p>
+            <p className="text-xs text-gray-400 mt-1">Fetching NBA headlines</p>
           </div>
         </div>
       )}
@@ -59,12 +65,23 @@ const LatestNews = () => {
 
       {/* News List */}
       {!isLoading && !error && displayArticles.length > 0 && (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {displayArticles.map(article => (
-            <MediaItem
+            <MediaCard
               key={article.id}
-              {...article}
-              className="border-b border-gray-200 pb-4 last:border-b-0"
+              id={article.id}
+              title={article.title}
+              thumbnail={article.imageUrl}
+              thumbnailFallback="📰"
+              time={article.time}
+              source={article.source}
+              showHoverEffects={true}
+              hoverStyle="news"
+              onClick={() => {
+                if (article.url) {
+                  window.open(article.url, "_blank", "noopener,noreferrer")
+                }
+              }}
             />
           ))}
         </div>
@@ -72,8 +89,16 @@ const LatestNews = () => {
 
       {/* Empty State */}
       {!isLoading && !error && displayArticles.length === 0 && (
-        <div className="text-center py-8">
-          <p className="text-sm text-gray-500">No news articles available</p>
+        <div className="text-center py-12">
+          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Newspaper className="h-8 w-8 text-orange-400" />
+          </div>
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">
+            No news available
+          </h3>
+          <p className="text-xs text-gray-500 max-w-xs mx-auto">
+            We're working on bringing you the latest NBA news. Check back soon!
+          </p>
         </div>
       )}
     </Card>

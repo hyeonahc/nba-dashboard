@@ -1,6 +1,7 @@
-import { Clock, ExternalLink, Play } from "lucide-react"
+import { Play } from "lucide-react"
 import { useTrendingVideosWithCache } from "../../hooks/video/useTrendingVideosWithCache"
 import Card from "../ui/Card"
+import MediaCard from "../ui/MediaCard"
 import SectionHeader from "../ui/SectionHeader"
 
 const TrendingVideos = () => {
@@ -64,9 +65,17 @@ const TrendingVideos = () => {
       {!isLoading && !error && videos.length > 0 && (
         <div className="space-y-3">
           {videos.slice(0, 2).map(video => (
-            <div
+            <MediaCard
               key={video.id}
-              className="group relative bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg hover:border-orange-200 transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+              id={video.id}
+              title={video.title}
+              thumbnail={
+                video.thumbnail.startsWith("http") ? video.thumbnail : undefined
+              }
+              thumbnailFallback={video.thumbnail}
+              publishedAt={video.publishedAt}
+              source={video.channelTitle}
+              showHoverEffects={true}
               onClick={() => {
                 // Open YouTube video in new tab
                 window.open(
@@ -75,71 +84,7 @@ const TrendingVideos = () => {
                   "noopener,noreferrer"
                 )
               }}
-            >
-              {/* Thumbnail Container - Full Width */}
-              <div className="relative w-full h-32 bg-gray-100 overflow-hidden">
-                {video.thumbnail.startsWith("http") ? (
-                  <>
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
-                      <div className="bg-white bg-opacity-0 group-hover:bg-opacity-90 rounded-full p-2 transform scale-75 group-hover:scale-100 transition-all duration-300">
-                        <Play
-                          className="h-6 w-6 text-gray-600 group-hover:text-orange-500"
-                          fill="currentColor"
-                        />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-3xl bg-gradient-to-br from-orange-100 to-orange-200">
-                    {video.thumbnail}
-                  </div>
-                )}
-              </div>
-
-              {/* Content - Full Width */}
-              <div className="p-3">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0 pr-2">
-                    <h3 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-2 group-hover:text-orange-600 transition-colors duration-200">
-                      {video.title}
-                    </h3>
-
-                    {/* Video Date */}
-                    {video.publishedAt && (
-                      <div className="flex items-center text-xs text-gray-500">
-                        <Clock className="h-3 w-3 mr-1.5" />
-                        {new Date(video.publishedAt).toLocaleDateString(
-                          "en-US",
-                          {
-                            month: "short",
-                            day: "numeric",
-                            year:
-                              new Date(video.publishedAt).getFullYear() !==
-                              new Date().getFullYear()
-                                ? "numeric"
-                                : undefined,
-                          }
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* External Link Icon */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0">
-                    <ExternalLink className="h-4 w-4 text-gray-400 group-hover:text-orange-500" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Hover Border Effect */}
-              <div className="absolute inset-0 border-2 border-orange-400 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-            </div>
+            />
           ))}
         </div>
       )}
