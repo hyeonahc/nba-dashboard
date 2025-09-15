@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import { basketballApiService } from "../../api/basketballApi"
+import {
+  basketballApiService,
+  type TransformedTeamRanking,
+} from "../../api/basketballApi"
 
 const CACHE_KEY = "nba-dashboard-standings-cache"
 const CACHE_EXPIRY_KEY = "nba-dashboard-standings-cache-expiry"
@@ -10,7 +13,7 @@ const CACHE_EXPIRY_KEY = "nba-dashboard-standings-cache-expiry"
 const CACHE_DURATION = 1000 * 60 * 60 * 24 // 24 hours
 
 // Helper functions for localStorage caching
-const getCachedStandings = (): unknown[] | null => {
+const getCachedStandings = (): TransformedTeamRanking[] | null => {
   try {
     const cached = localStorage.getItem(CACHE_KEY)
     const expiry = localStorage.getItem(CACHE_EXPIRY_KEY)
@@ -48,7 +51,7 @@ const getCachedStandings = (): unknown[] | null => {
   }
 }
 
-const setCachedStandings = (standings: unknown[]) => {
+const setCachedStandings = (standings: TransformedTeamRanking[]) => {
   try {
     const expiry = Date.now() + CACHE_DURATION
     localStorage.setItem(CACHE_KEY, JSON.stringify(standings))
@@ -59,7 +62,7 @@ const setCachedStandings = (standings: unknown[]) => {
 }
 
 export const useStandingsWithCache = () => {
-  return useQuery({
+  return useQuery<TransformedTeamRanking[]>({
     queryKey: ["standings"],
     queryFn: async () => {
       // First check if we have valid cached data
