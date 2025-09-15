@@ -15,7 +15,7 @@ const UpcomingGames = ({ games, loading, error }: UpcomingGamesProps) => {
       <Card>
         <SectionHeader
           icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
-          title="Upcoming Games"
+          title="Upcoming Game"
         />
         <div className="flex items-center justify-center py-12">
           <div className="flex flex-col items-center space-y-3">
@@ -32,7 +32,7 @@ const UpcomingGames = ({ games, loading, error }: UpcomingGamesProps) => {
       <Card>
         <SectionHeader
           icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
-          title="Upcoming Games"
+          title="Upcoming Game"
         />
         <div className="flex items-center justify-center py-12">
           <div className="flex flex-col items-center space-y-3 text-center">
@@ -49,7 +49,7 @@ const UpcomingGames = ({ games, loading, error }: UpcomingGamesProps) => {
       <Card>
         <SectionHeader
           icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
-          title="Upcoming Games"
+          title="Upcoming Game"
         />
         <div className="flex items-center justify-center py-12">
           <div className="flex flex-col items-center space-y-3 text-center">
@@ -65,7 +65,7 @@ const UpcomingGames = ({ games, loading, error }: UpcomingGamesProps) => {
     <Card>
       <SectionHeader
         icon={<Calendar className="h-5 w-5 text-orange-500 mr-2" />}
-        title="Upcoming Games"
+        title="Upcoming Game"
         rightSlot={
           <div className="text-sm text-gray-600">{games[0]?.season || ""}</div>
         }
