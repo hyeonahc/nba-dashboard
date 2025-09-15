@@ -5,10 +5,10 @@ import { useStandingsWithCache } from "../hooks/standings/useStandingsWithCache"
 import { useTrendingVideosWithCache } from "../hooks/video/useTrendingVideosWithCache"
 
 import LatestNews from "./homepage/LatestNews"
-import LiveMatch from "./homepage/LiveMatch"
 import PastMatches from "./homepage/PastMatches"
 import TeamRankingsConference from "./homepage/TeamRankingsConference"
 import TrendingVideos from "./homepage/TrendingVideos"
+import UpcomingGames from "./homepage/UpcomingGames"
 import UpcomingMatches from "./homepage/UpcomingMatches"
 
 const Homepage = () => {
@@ -47,15 +47,36 @@ const Homepage = () => {
     },
   ]
 
-  const liveMatch = {
-    homeTeam: "Lakers",
-    awayTeam: "Warriors",
-    homeScore: 98,
-    awayScore: 95,
-    quarter: "4th",
-    timeLeft: "2:34",
-    isLive: true,
-  }
+  const upcomingGames = [
+    {
+      id: "1",
+      homeTeam: "Lakers",
+      awayTeam: "Warriors",
+      homeTeamFullName: "Los Angeles Lakers",
+      awayTeamFullName: "Golden State Warriors",
+      homeTeamLogo:
+        "https://cdn.nba.com/logos/nba/1610612747/primary/L/logo.svg",
+      awayTeamLogo:
+        "https://cdn.nba.com/logos/nba/1610612744/primary/L/logo.svg",
+      date: "Today",
+      time: "8:00 PM",
+      season: "2023-24 Season",
+    },
+    {
+      id: "2",
+      homeTeam: "Celtics",
+      awayTeam: "Heat",
+      homeTeamFullName: "Boston Celtics",
+      awayTeamFullName: "Miami Heat",
+      homeTeamLogo:
+        "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg",
+      awayTeamLogo:
+        "https://cdn.nba.com/logos/nba/1610612748/primary/L/logo.svg",
+      date: "Tomorrow",
+      time: "7:30 PM",
+      season: "2023-24 Season",
+    },
+  ]
 
   const pastMatches = [
     {
@@ -109,7 +130,7 @@ const Homepage = () => {
 
         {/* Middle Column */}
         <div className="lg:col-span-6 space-y-6">
-          <LiveMatch match={liveMatch} />
+          <UpcomingGames games={upcomingGames} />
           <TeamRankingsConference
             teams={standings}
             conference="Eastern Conference"
