@@ -90,9 +90,9 @@ const MediaCard = ({
             {imageLoading && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
                 <div className="text-center">
-                  <div className="relative">
-                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-orange-200 mx-auto mb-2"></div>
-                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-orange-500 border-t-transparent absolute top-0 left-1/2 transform -translate-x-1/2"></div>
+                  <div className="relative w-6 h-6 mx-auto mb-2">
+                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-orange-200"></div>
+                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-orange-500 border-t-transparent absolute top-0 left-0"></div>
                   </div>
                   <p className="text-xs text-gray-500">Loading image...</p>
                 </div>
