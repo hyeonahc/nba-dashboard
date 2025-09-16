@@ -1,69 +1,95 @@
-# React + TypeScript + Vite
+<br/>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center"><a href="https://nba-dashboard-hyeonahc.vercel.app" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f3c0.svg" width="120px"></div>
 
-Currently, two official plugins are available:
+<br/>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<div align="center">
 
-## Expanding the ESLint configuration
+![last commit](https://img.shields.io/github/last-commit/hyeonahc/nba-dashboard?color=green)
+![most language](https://img.shields.io/github/languages/top/hyeonahc/nba-dashboard)
+[![release](https://img.shields.io/badge/release-v0.1.0-yellow)](https://github.com/hyeonahc/nba-dashboard/releases/tag/v0.1.0)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+</div>
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+<br/>
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+# 🏀 NBA Dashboard
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- [✨ Project Summary](#-project-summary)
+- [🛠 Tech Stack](#-tech-stack)
+- [🌐 Integrated APIs](#-integrated-apis)
+- [🚀 Technical Highlights](#-technical-highlights)
+- [🎯 Design Decisions](#-design-decisions)
+- [🚧 Future Improvements](#-future-improvements)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+<br />
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ✨ Project Summary
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+A lightweight NBA dashboard that surfaces upcoming games, recent results, conference standings, latest news, and trending videos with a clean, mobile-first UI.
+
+🔗 [Visit the live website on Vercel](https://nba-dashboard-hyeonahc.vercel.app)
+
+<br/>
+
+## 🛠 Tech Stack
+
+### Front-End Tech Stack
+
+**React + TypeScript + Vite**
+
+- **React Query**: server-state management, caching, retries
+- **Axios**: simplified HTTP client with interceptors for cleaner API handling
+- **Tailwind CSS**: utility-first styling for responsive design
+
+<br />
+
+## 🌐 Integrated APIs
+
+- **[Ball Don’t Lie](https://www.balldontlie.io/)**: Game schedules & results
+- **[API-Basketball](https://www.api-basketball.com/)**: Team standings
+- **[YouTube Data v3](https://developers.google.com/youtube/v3)**: NBA videos
+- **[NBA Latest News (RapidAPI)](https://rapidapi.com/savey03/api/nba-latest-news)**: NBA headlines
+- **[Pexels](https://www.pexels.com/api/)**: Basketball images (since News API doesn’t provide thumbnails)
+
+This mix showcases different data shapes (lists, leaderboards, media cards) and rate-limit handling strategies.
+
+<br />
+
+## 🚀 Technical Highlights
+
+- **Smart Caching & Rate Limits**: Handles multiple APIs with different quotas (5/min, 100/day) using type-safe caching, stale-while-revalidate, and fallback to stale data.
+- **AI-Driven Image Selection**: Analyzes article titles → generates context-aware search terms for Pexels, ensuring relevant and optimized images.
+- **Advanced UI/UX**: Smooth animations (skeletons, spinners, hover effects), responsive 3-column grid, and NBA-inspired gradient design.
+- **Robust Data Pipeline**: Multi-season fallback for standings, NBA-specific ranking logic (win% → wins → point diff), and error recovery.
+
+<br/>
+
+## 🎯 Design Decisions
+
+1. **Visual Hierarchy & Branding**
+
+   - Orange, basketball-inspired theme
+   - Clean card-based layout
+   - 3-column structure for organized data display
+
+2. **Responsive & Accessible**
+
+   - Mobile-first design
+   - Touch-friendly, scalable typography
+   - Accessibility support (alt text, keyboard nav, focus states)
+
+3. **Visual Effects & Interactions**
+   - Gradients, shadows, smooth animations
+   - Clear loading states with skeletons & spinners
+
+<br/>
+
+## 🚧 Future Improvements
+
+- Add testing coverage
+- Complete pages: Games / Teams / Players / Statistics
+- Introduce global state management (Redux/Zustand)
+- Enhance interactivity: filtering, sorting, personalization
+  - e.g., season dropdown for user-driven data display
