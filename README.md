@@ -14,7 +14,7 @@
 
 <br/>
 
-# 🏀 NBA Dashboard
+# NBA Dashboard
 
 - [✨ Project Summary](#-project-summary)
 - [🛠 Tech Stack](#-tech-stack)
@@ -35,8 +35,6 @@ A lightweight NBA dashboard that surfaces upcoming games, recent results, confer
 
 ## 🛠 Tech Stack
 
-### Front-End Tech Stack
-
 **React + TypeScript + Vite**
 
 - **React Query**: server-state management, caching, retries
@@ -47,11 +45,13 @@ A lightweight NBA dashboard that surfaces upcoming games, recent results, confer
 
 ## 🌐 Integrated APIs
 
-- **[Ball Don’t Lie](https://www.balldontlie.io/)**: Game schedules & results
-- **[API-Basketball](https://www.api-basketball.com/)**: Team standings
-- **[YouTube Data v3](https://developers.google.com/youtube/v3)**: NBA videos
-- **[NBA Latest News (RapidAPI)](https://rapidapi.com/savey03/api/nba-latest-news)**: NBA headlines
-- **[Pexels](https://www.pexels.com/api/)**: Basketball images (since News API doesn’t provide thumbnails)
+### Why I Chose These APIs
+
+- **[Ball Don’t Lie](https://www.balldontlie.io/)**: Simple, free, and fast for prototyping schedules & results
+- **[API-Basketball](https://www.api-basketball.com/)**: Richer standings data with win%, conference splits, and detailed stats
+- **[YouTube Data v3](https://developers.google.com/youtube/v3)**: Reliable source for trending and recent NBA video content
+- **[NBA Latest News (RapidAPI)](https://rapidapi.com/savey03/api/nba-latest-news)**: Quick access to NBA headlines for up-to-date context
+- **[Pexels](https://www.pexels.com/api/)**: High-quality basketball images to supplement news articles (since News API doesn’t provide thumbnails)
 
 This mix showcases different data shapes (lists, leaderboards, media cards) and rate-limit handling strategies.
 
