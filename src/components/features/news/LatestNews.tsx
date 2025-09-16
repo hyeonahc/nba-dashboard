@@ -25,10 +25,7 @@ const LatestNews = () => {
       {isLoading && (
         <div className="flex items-center justify-center h-32">
           <div className="text-center">
-            <div className="relative">
-              <div className="animate-spin rounded-full h-10 w-10 border-2 border-orange-200 mx-auto mb-3"></div>
-              <div className="animate-spin rounded-full h-10 w-10 border-2 border-orange-500 border-t-transparent absolute top-0 left-1/2 transform -translate-x-1/2"></div>
-            </div>
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-orange-200 border-t-orange-500 mx-auto mb-3"></div>
             <p className="text-sm text-gray-600 font-medium">
               Loading latest news...
             </p>
