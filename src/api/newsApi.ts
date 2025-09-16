@@ -2,6 +2,77 @@ import axios from "axios"
 import type { NewsApiArticle, NewsArticle } from "../types"
 import { getRandomBasketballImageFromPexels } from "../utils/pexelsImageUtils"
 
+// NBA-related search terms for more relevant images
+const NBA_SEARCH_TERMS = [
+  "NBA basketball",
+  "NBA player",
+  "NBA game",
+  "NBA arena",
+  "NBA team",
+  "basketball court",
+  "basketball player",
+  "basketball game",
+  "basketball dunk",
+  "basketball shot",
+  "basketball training",
+  "basketball practice",
+]
+
+/**
+ * Extract NBA-related search terms from article title
+ * @param title - Article title
+ * @returns string - Relevant search term for Pexels
+ */
+const extractNBASearchTerm = (title: string): string => {
+  const lowerTitle = title.toLowerCase()
+
+  // Check for specific NBA terms in the title
+  if (lowerTitle.includes("nba") || lowerTitle.includes("basketball")) {
+    return "NBA basketball"
+  }
+  if (
+    lowerTitle.includes("player") ||
+    lowerTitle.includes("guard") ||
+    lowerTitle.includes("center")
+  ) {
+    return "NBA player"
+  }
+  if (
+    lowerTitle.includes("game") ||
+    lowerTitle.includes("match") ||
+    lowerTitle.includes("final")
+  ) {
+    return "NBA game"
+  }
+  if (
+    lowerTitle.includes("team") ||
+    lowerTitle.includes("heat") ||
+    lowerTitle.includes("lakers") ||
+    lowerTitle.includes("warriors") ||
+    lowerTitle.includes("celtics") ||
+    lowerTitle.includes("clippers")
+  ) {
+    return "NBA team"
+  }
+  if (
+    lowerTitle.includes("court") ||
+    lowerTitle.includes("arena") ||
+    lowerTitle.includes("stadium")
+  ) {
+    return "NBA arena"
+  }
+  if (
+    lowerTitle.includes("dunk") ||
+    lowerTitle.includes("shot") ||
+    lowerTitle.includes("training")
+  ) {
+    return "basketball training"
+  }
+
+  // Default to a random NBA term if no specific match
+  return NBA_SEARCH_TERMS[Math.floor(Math.random() * NBA_SEARCH_TERMS.length)]
+}
+
 // Create axios instance for news API
 const newsApi = axios.create({
   baseURL: import.meta.env.VITE_NEWS_API_URL,
@@ -49,11 +120,17 @@ export const newsApiService = {
           imageUrl: "", // Will be populated with Pexels image
         })) || []
 
-      // Generate Pexels images for each article
+      // Generate Pexels images for each article with NBA-specific search terms
       const articlesWithImages = await Promise.all(
         articles.map(async (article: NewsArticle, index: number) => {
           try {
-            const imageUrl = await getRandomBasketballImageFromPexels(400, 300)
+            // Extract NBA-related search terms from article title
+            const searchTerm = extractNBASearchTerm(article.title)
+            const imageUrl = await getRandomBasketballImageFromPexels(
+              400,
+              300,
+              searchTerm
+            )
             return { ...article, imageUrl }
           } catch (error) {
             console.error(
@@ -116,11 +193,17 @@ export const newsApiService = {
         },
       ]
 
-      // Generate Pexels images for fallback articles too
+      // Generate Pexels images for fallback articles too with NBA-specific search terms
       const fallbackArticlesWithImages = await Promise.all(
         fallbackArticles.map(async (article: NewsArticle, index: number) => {
           try {
-            const imageUrl = await getRandomBasketballImageFromPexels(400, 300)
+            // Extract NBA-related search terms from article title
+            const searchTerm = extractNBASearchTerm(article.title)
+            const imageUrl = await getRandomBasketballImageFromPexels(
+              400,
+              300,
+              searchTerm
+            )
             return { ...article, imageUrl }
           } catch (error) {
             console.error(

@@ -1,4 +1,5 @@
 import { Clock, ExternalLink } from "lucide-react"
+import { useEffect, useState } from "react"
 
 interface MediaCardProps {
   id: string | number
@@ -27,11 +28,31 @@ const MediaCard = ({
   hoverStyle = "video",
   className = "",
 }: MediaCardProps) => {
+  const [imageLoading, setImageLoading] = useState(true)
+  const [imageError, setImageError] = useState(false)
+
   const handleClick = () => {
     if (onClick) {
       onClick()
     }
   }
+
+  const handleImageLoad = () => {
+    setImageLoading(false)
+  }
+
+  const handleImageError = () => {
+    setImageLoading(false)
+    setImageError(true)
+  }
+
+  // Reset loading state when thumbnail changes
+  useEffect(() => {
+    if (thumbnail) {
+      setImageLoading(true)
+      setImageError(false)
+    }
+  }, [thumbnail])
 
   const displayTime =
     time ||
@@ -63,19 +84,37 @@ const MediaCard = ({
     >
       {/* Thumbnail Container - Full Width */}
       <div className="relative w-full h-32 bg-gray-100 overflow-hidden">
-        {thumbnail ? (
+        {thumbnail && !imageError ? (
           <>
+            {/* Loading State */}
+            {imageLoading && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+                <div className="text-center">
+                  <div className="relative">
+                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-orange-200 mx-auto mb-2"></div>
+                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-orange-500 border-t-transparent absolute top-0 left-1/2 transform -translate-x-1/2"></div>
+                  </div>
+                  <p className="text-xs text-gray-500">Loading image...</p>
+                </div>
+              </div>
+            )}
+
             <img
               src={thumbnail}
               alt={title}
-              className={`w-full h-full object-cover ${
+              className={`w-full h-full object-cover transition-opacity duration-300 ${
+                imageLoading ? "opacity-0" : "opacity-100"
+              } ${
                 showHoverEffects
                   ? "group-hover:scale-105 transition-transform duration-300"
                   : ""
               }`}
+              onLoad={handleImageLoad}
+              onError={handleImageError}
             />
+
             {/* Play Button Overlay - Only for video hover effects */}
-            {showHoverEffects && hoverStyle === "video" && (
+            {showHoverEffects && hoverStyle === "video" && !imageLoading && (
               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                 <div className="bg-white bg-opacity-0 group-hover:bg-opacity-90 rounded-full p-2 transform scale-75 group-hover:scale-100 transition-all duration-300">
                   <svg

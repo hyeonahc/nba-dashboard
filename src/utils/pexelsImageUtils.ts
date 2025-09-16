@@ -35,34 +35,22 @@ interface PexelsResponse {
 
 // Basketball-related search terms for variety
 const BASKETBALL_TERMS = [
-  "basketball",
-  "basketball court",
   "basketball player",
   "basketball game",
-  "basketball hoop",
   "basketball team",
   "basketball arena",
-  "basketball training",
   "basketball dunk",
   "basketball shot",
-  "NBA",
-  "basketball practice",
-  "basketball gym",
-  "basketball stadium",
-  "basketball uniform",
-  "basketball coach",
-  "basketball referee",
-  "basketball fans",
 ]
 
 /**
- * Fetches a random basketball-related image from Pexels
+ * Fetches a random image from Pexels based on search term
  * @param width - Desired width of the image (default: 400)
  * @param height - Desired height of the image (default: 300)
- * @param searchTerm - Specific search term (optional, will use random if not provided)
- * @returns Promise<string> - URL of the random basketball image
+ * @param searchTerm - Specific search term (optional, will use random basketball term if not provided)
+ * @returns Promise<string> - URL of the random image
  */
-export const getRandomBasketballImageFromPexels = async (
+export const getRandomImageFromPexels = async (
   width: number = 400,
   height: number = 300,
   searchTerm?: string
@@ -157,7 +145,7 @@ export const getMultipleBasketballImagesFromPexels = async (
 ): Promise<string[]> => {
   try {
     const promises = Array.from({ length: count }, () =>
-      getRandomBasketballImageFromPexels(width, height)
+      getRandomImageFromPexels(width, height)
     )
 
     return await Promise.all(promises)
@@ -177,12 +165,21 @@ export const getMultipleBasketballImagesFromPexels = async (
  * @param height - Desired height of the image (default: 300)
  * @returns Promise<string> - URL of the image
  */
+// Basketball-specific wrapper for backward compatibility
+export const getRandomBasketballImageFromPexels = async (
+  width: number = 400,
+  height: number = 300,
+  searchTerm?: string
+): Promise<string> => {
+  return getRandomImageFromPexels(width, height, searchTerm)
+}
+
 export const searchBasketballImageOnPexels = async (
   searchTerm: string,
   width: number = 400,
   height: number = 300
 ): Promise<string> => {
-  return getRandomBasketballImageFromPexels(width, height, searchTerm)
+  return getRandomImageFromPexels(width, height, searchTerm)
 }
 
 /**
@@ -220,11 +217,7 @@ export const usePexelsBasketballImage = (
     setError(null)
 
     try {
-      const url = await getRandomBasketballImageFromPexels(
-        width,
-        height,
-        searchTerm
-      )
+      const url = await getRandomImageFromPexels(width, height, searchTerm)
       setImageUrl(url)
     } catch (err) {
       const errorMessage =
