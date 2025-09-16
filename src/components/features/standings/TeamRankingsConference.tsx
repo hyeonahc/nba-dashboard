@@ -103,7 +103,8 @@ const TeamRankingsConference = ({
                 key={`${team.team}-${team.position}-${index}`}
                 className="hover:bg-gray-50 rounded-lg transition-colors p-3 border border-gray-100"
               >
-                <div className="flex items-center justify-between">
+                {/* Desktop Layout - Horizontal */}
+                <div className="hidden sm:flex items-center justify-between">
                   {/* Position and Team Info */}
                   <div className="flex items-center space-x-3">
                     <div className="flex-shrink-0">
@@ -163,6 +164,69 @@ const TeamRankingsConference = ({
                         </div>
                         <div className="text-xs text-gray-500">Diff</div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mobile Layout - Better Balanced */}
+                <div className="sm:hidden">
+                  {/* First line: Rank + Team logo + Team name */}
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                        <span className="text-sm font-bold text-orange-600">
+                          {team.position}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Team Logo */}
+                    {team.logo && (
+                      <div className="w-8 h-8 flex-shrink-0">
+                        <img
+                          src={team.logo}
+                          alt={team.team}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    )}
+
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-medium text-gray-900 text-sm truncate">
+                        {team.team}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Second line: Stats in a grid layout using full width */}
+                  <div className="grid grid-cols-3 gap-4">
+                    {/* Record */}
+                    <div className="text-center">
+                      <div className="font-medium text-gray-900 text-sm">
+                        {team.wins ?? 0}-{team.losses ?? 0}
+                      </div>
+                      <div className="text-xs text-gray-500">Record</div>
+                    </div>
+
+                    {/* Win % */}
+                    <div className="text-center">
+                      <div className="font-medium text-gray-900 text-sm">
+                        {((team.winPercentage ?? 0) * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-xs text-gray-500">Win %</div>
+                    </div>
+
+                    {/* Point differential */}
+                    <div className="text-center">
+                      <div
+                        className={`font-medium text-sm ${
+                          isPositiveDiff ? "text-green-600" : "text-red-600"
+                        }`}
+                      >
+                        {isPositiveDiff ? "+" : ""}
+                        {pointDiff.toFixed(0)}
+                      </div>
+                      <div className="text-xs text-gray-500">Diff</div>
                     </div>
                   </div>
                 </div>
